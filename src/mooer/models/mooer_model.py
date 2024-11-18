@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import List, Optional
-from transformers import AutoModelForCausalLM, AutoTokenizer, T5ForConditionalGeneration
+from transformers import AutoModelForCausalLM, AutoTokenizer, T5ForConditionalGeneration,Qwen2AudioForConditionalGeneration
 from peft import PeftModel, get_peft_model
 from mooer.utils.utils import print_module_size, compute_accuracy
 from mooer.utils.config_utils import generate_peft_config
@@ -102,10 +102,9 @@ def setup_llm(model_config, train_config=None, peft_config=None):
         load_dtype = torch.bfloat16
     else:
         load_dtype = torch.float32
-    if "qwen" in model_config.llm_name.lower():
-        model = AutoModelForCausalLM.from_pretrained(
+    if "audio" in model_config.llm_name.lower():
+        model = Qwen2AudioForConditionalGeneration.from_pretrained(
             model_config.llm_path,
-            use_cache=None,
             torch_dtype=load_dtype,
         )
     else:

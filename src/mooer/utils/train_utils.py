@@ -2,10 +2,10 @@ import time
 from contextlib import nullcontext
 import torch.distributed as dist
 
-try:
-    import torch_musa
-except ImportError as e:
-    print("You should install torch_musa if you want to run on Moore Threads GPU")
+# try:
+#     import torch_musa
+# except ImportError as e:
+#     print("You should install torch_musa if you want to run on Moore Threads GPU")
 from mooer.utils.utils import *
 from mooer.utils.checpoint_io import save_model_checkpoint_deepspeed
 
@@ -62,6 +62,7 @@ def train(
             while should_continue:
                 try:
                     batch = next(train_dataloader_iterator)
+                    
                     total_step += 1
                     for key in batch.keys():
                         batch[key] = (

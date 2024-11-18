@@ -7,10 +7,10 @@ import deepspeed
 
 # nn
 import torch
-try:
-    import torch_musa
-except ImportError as e:
-    print("You should install torch_musa if you want to run on Moore Threads GPU")
+# try:
+#     import torch_musa
+# except ImportError as e:
+#     print("You should install torch_musa if you want to run on Moore Threads GPU")
 
 from mooer.models import mooer_model
 from mooer.utils.utils import get_device
@@ -42,6 +42,7 @@ def main():
     configs = parse_asr_configs(args.training_config)
     train_config = configs['TrainConfig']
     model_config = configs['ModelConfig']
+    print("###############################\nmodel_config:",model_config)
     dataset_config = configs['DataConfig']
     peft_config = configs['PeftConfig']
     deepspeed_config = train_config.deepspeed_config
@@ -106,6 +107,7 @@ def main():
     else:
         raise KeyError
     
+
     # Start the training process
     train(
         model_engine,

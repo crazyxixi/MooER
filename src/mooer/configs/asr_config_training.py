@@ -5,14 +5,15 @@ from typing import Optional, List
 @dataclass
 class ModelConfig:
     def __init__(self):
-        self.llm_name: str = "qwen2_7b_chat"
+        self.llm_name: str = "qwen2.5"
         # You should set your own path
-        self.llm_path: str = "pretrained_models/Qwen2-7B-Instruct"
-        self.encoder_path: str = "pretrained_models/paraformer_encoder/paraformer-encoder.pth"
-        self.adapter_path: Optional[str] = ''
+        self.llm_path: str = "/root/autodl-tmp/model/qwen/Qwen2.5-7B"
+        self.encoder_path: str = "/root/autodl-tmp/model/MooER/paraformer_encoder/paraformer-encoder.pth"
+        self.adapter_path: Optional[str] = '/root/autodl-tmp/model/MooER/asr/adapter_project.pt'
+        #self.adapter_path: Optional[str] = ''
         self.lora_dir: Optional[str] = ''
-        self.cmvn_path: str = "/root/MooER/src/mooer/configs/am.mvn"
-        self.prompt_key: str = 'asr'  # asr, ast... you can add tasks in src/mooer/utils/data_utils.py
+        self.cmvn_path: str = "/root/xishaojian/MooER/src/mooer/configs/am.mvn"
+        self.prompt_key: str = 'sr'  # asr, ast... you can add tasks in src/mooer/utils/data_utils.py
         ###############################
         self.llm_type: str = "decoder_only"
         self.llm_dim: int = 3584
@@ -23,7 +24,7 @@ class ModelConfig:
         self.adapter_downsample_rate: int = 2
         self.modal: str = "audio"
         self.normalize: Optional[bool] = False
-        self.gradient_checkpoint: bool = False
+        self.gradient_checkpoint: bool = True
         self.is_inference: bool = False
         self.prompt_template_key: str = 'qwen'
 
@@ -64,12 +65,12 @@ class PeftConfig:
 @dataclass
 class TrainConfig:
     def __init__(self):
-        self.model_name: str = "asr"
+        self.model_name: str = "qwenSR"
         self.enable_deepspeed: bool = True
         self.batch_size_training: int = 8  # you should set same as deepspeed config for throughput
         self.batching_strategy: str = 'custom'
         self.context_length: int = 4096
-        self.num_epochs: int = 10
+        self.num_epochs: int = 1
         self.num_workers_dataloader: int = 4
         
         # please set it in deepspeed config
@@ -91,13 +92,13 @@ class TrainConfig:
         self.mixed_precision: bool = True
         self.val_batch_size: int = 1
         self.use_peft: bool = True
-        self.output_dir: str = "output/save_models"
+        self.output_dir: str = "/root/autodl-tmp/output/save_models"
         self.freeze_llm: bool = True
         self.freeze_encoder: bool = True
         self.freeze_projector: bool = False
         self.find_unused_parameters: bool = False
         self.gradient_checkpoint: bool = False
-        self.deepspeed_config: str = '/root/MooER/src/mooer/configs/deepspeed_config_zero2.json'
+        self.deepspeed_config: str = '/root/xishaojian/MooER/src/mooer/configs/deepspeed_config_zero2.json'
         # if you want large bsz or to reduce memory, use zero3, but it will be slow
         
     def __getitem__(self, key):
@@ -110,7 +111,7 @@ class TrainConfig:
 @dataclass
 class DataConfig:
     def __init__(self):
-        self.train_data_path: str = '/YOUR/training/data.0.list'
+        self.train_data_path: str = '/root/autodl-tmp/fisher_data/pkg_training/data.list'
         self.val_data_path: Optional[str] = ''
         self.test_data_dir: Optional[str] = ''
         self.test_sets: Optional[str] = ''
@@ -118,11 +119,11 @@ class DataConfig:
         self.fix_length_audio: int = -1
         self.max_length: int = 2000
         self.min_length: int = 20
-        self.mel_size: int = 80
+        self.mel_size: int = 128
         self.train_data_type: str = 'shard'
         self.test_data_type: str = 'shard'
         self.prompt_template_key: str = 'qwen'
-        self.prompt_key: str = 'asr'
+        self.prompt_key: str = 'sr'
         self.w2v_bert_path: str = ''
         self.num_epochs: int = 10
         self.sort: bool = False

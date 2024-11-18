@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # set your path
-HOME_ROOT=/root/MooER
+HOME_ROOT=/root/xishaojian/MooER
 cd $HOME_ROOT || exit 0
 
 export PYTHONPATH=${HOME_ROOT}/src:$PYTHONPATH
-VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+VISIBLE_DEVICES=0,1
 ################### For MUSA User #############################
 # export MUSA_VISIBLE_DEVICES=$VISIBLE_DEVICES
 # export DS_ACCELERATOR=musa

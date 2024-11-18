@@ -9,15 +9,15 @@ export LC_ALL=C
 THIS_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 echo "##### config #####"
-wav_scp='data/wav.scp'
-text='data/text'
-write_dir='data/pkg/path'
+wav_scp='/root/xishaojian/MooER/src/wav.scp'
+text='/root/xishaojian/MooER/src/text'
+write_dir='/root/autodl-tmp/fisher_data/pkg_training'
 write_num=1
-write_prefix='data.#.list'
+write_prefix='data.list'
 text_norm=true
 shuffle=true
-data_type=raw
-num_threads=32
+data_type=shard
+num_threads=16
 # raw or shard
 
 # parse config

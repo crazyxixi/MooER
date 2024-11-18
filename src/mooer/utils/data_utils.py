@@ -5,4 +5,5 @@ PROMPT_TEMPLATE_DICT = {
 PROMPT_DICT = {
     'asr': "Transcribe speech to text. ",
     'ast': "Translate speech to english text. ",
+    'sr' : "Translate the speech of different speakers to text and label the speaker. "
 }
